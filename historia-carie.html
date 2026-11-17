@@ -17,22 +17,70 @@
  .scene { grid-template-columns: minmax(0,1fr) !important; }
  .scene img { max-height: 330px; }
 }
-</style></head><body><header><a href="index.html">🦷 Liga do Sorriso</a><nav><a href="index.html">Início</a><a href="infantil.html">Área Infantil</a><a href="tabuleiro.html">Jogo</a><a href="carie-educativa.html">Versão educativa</a></nav></header><main class="wrap"><section class="intro"><img src="assets/historia-capa.jpg" alt="Ilustração 3D da história da cárie com dentinhos expressivos"><div><h1>💜 A História da Cárie</h1><p>Do primeiro sinal à possibilidade de tratamento de canal. Avance pelas cenas e descubra o que acontece dentro do dente!</p></div></section><section class="story" aria-label="História interativa da cárie"><div class="eyebrow" id="counter">CENA 1 DE 6</div><div class="progress" id="progress" aria-hidden="true"></div><div class="scene"><img id="picture" src="assets/carie-cena-1.jpg" alt="Dente 3D na primeira cena da história"><div><h2 id="heading"></h2><p class="bubble" id="quote"></p><p id="description"></p><p class="fact" id="fact"></p></div></div><div class="controls"><button class="secondary" id="prev" onclick="change(-1)">← Anterior</button><button class="secondary" id="speak" onclick="speakScene()">🔊 Ouvir a cena</button><button id="next" onclick="change(1)">Próxima cena →</button></div><p class="note">História educativa: a progressão da cárie não é inevitável. O diagnóstico e o tratamento dependem de avaliação odontológica.</p></section></main><script>const scenes=[["A placa bacteriana", "Oi! Eu sou o Dentinho!", "As bactérias do biofilme aproveitam açúcares da alimentação e produzem ácidos. Quando isso acontece frequentemente, o esmalte pode perder minerais.", "A cárie é um processo, não uma bactéria que “come” o dente."], ["O primeiro sinal", "Ei, o que está acontecendo com meu esmalte?", "A cárie pode começar como uma mancha branca de desmineralização, antes de surgir uma cavidade. Nessa fase, medidas preventivas e avaliação profissional podem ajudar a controlar a lesão.", "Nem toda cárie começa com um buraco visível."], ["A cárie avança", "Ai! Agora estou mais sensível!", "Se a lesão progride para a dentina, pode haver sensibilidade ou dor. Mas algumas lesões continuam sem sintomas. O dentista avalia a profundidade e indica o cuidado necessário.", "Nem toda cárie causa dor."], ["A polpa em perigo", "Minha parte viva está sofrendo!", "Quando a cárie é muito profunda, a polpa — tecido com nervos e vasos sanguíneos — pode inflamar. Dependendo do diagnóstico, tratamentos diferentes podem ser necessários.", "Cárie profunda não significa automaticamente tratamento de canal."], ["Quando a polpa perde a vitalidade", "Não estou sentindo dor... será que melhorei?", "Em alguns casos, a inflamação ou infecção leva à necrose pulpar: o tecido dentro do dente perde a vitalidade. A dor pode até diminuir, mas isso não significa cura.", "Um dente com necrose pode não doer e ainda precisar de tratamento."], ["O tratamento de canal", "O dentista pode me salvar!", "Quando indicado, o tratamento de canal remove o tecido pulpar comprometido, limpa e desinfeta os canais e depois os preenche. O dente também precisa de uma restauração adequada.", "O dente tratado pode continuar na boca e mastigar, mas precisa de acompanhamento e cuidados."]];let index=0;function render(){const s=scenes[index];document.getElementById('counter').textContent='CENA '+(index+1)+' DE 6';document.getElementById('heading').textContent=s[0];document.getElementById('quote').textContent='🦷 “'+s[1]+'”';document.getElementById('description').textContent=s[2];document.getElementById('fact').textContent='Você sabia? '+s[3];document.getElementById('picture').src='assets/carie-cena-'+(index+1)+'.jpg';document.getElementById('picture').alt='Ilustração 3D: '+s[0];document.getElementById('progress').innerHTML=scenes.map((_,i)=>'<span class="'+(i<=index?'on':'')+'"></span>').join('');document.getElementById('prev').disabled=index===0;document.getElementById('next').textContent=index===5?'Recomeçar ↻':'Próxima cena →'}function change(n){if('speechSynthesis' in window)window.speechSynthesis.cancel();document.getElementById('speak').textContent='🔊 Ouvir a cena';index=index===5&&n===1?0:Math.max(0,Math.min(5,index+n));render()}function speakScene(){
- if(!('speechSynthesis' in window)){alert('Narração não disponível neste navegador.');return}
- const engine=window.speechSynthesis;
- if(engine.speaking){engine.cancel();return}
+</style><style id="liga-15-story-fix">
+/* Image contains captions: display original image at its intrinsic ratio. */
+.scene img,.intro img{display:block!important;width:100%!important;height:auto!important;max-height:none!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center!important;background:#39124d!important}
+.scene{align-items:start!important}.scene>img{min-width:0}
+@media(max-width:800px){.scene{grid-template-columns:minmax(0,1fr)!important}.story{padding:14px!important}.scene img{max-height:none!important}.controls{display:grid;grid-template-columns:1fr 1fr}.controls button{padding:12px 8px}.controls #next{grid-column:1/-1}}
+</style><style id="liga-15-story-fix">
+.scene{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+.scene #picture,.intro img{display:block;width:100%;height:auto!important;max-height:none!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center!important;border-radius:18px}
+.scene #picture{border:2px solid #e5b1ff;box-shadow:0 14px 36px #14052277;background:#36134e}
+.story{overflow:visible}.scene>div{min-width:0}
+@media(max-width:850px){.scene{grid-template-columns:minmax(0,1fr)!important}.scene #picture{height:auto!important;max-height:none!important;aspect-ratio:auto!important}.controls{display:flex;gap:10px}.controls button{flex:1 1 150px}}
+@media(max-width:450px){.controls{display:grid;grid-template-columns:1fr 1fr}.controls #next{grid-column:1/-1}}
+</style><style>.scene img{width:100%;height:auto!important;max-height:none!important;object-fit:contain!important;display:block}.scene{align-items:start!important}@media(max-width:760px){.scene{display:block!important}.scene img{max-width:100%;margin:0 auto 16px}}</style><style id="liga-v22-ajustes">
+/* V22: preserve image and embedded captions; never crop the supplied assets */
+img{max-width:100%}
+.scene img,.scene #picture,.intro img,.welcome img,.photo img,.character-portrait,.cinema-tooth,.care-card img,.art,.artrow img,.anatomy-photographic img{object-fit:contain!important;object-position:center center!important;transform:none!important}
+.scene img,.scene #picture,.intro img{width:100%!important;height:auto!important;max-height:none!important;aspect-ratio:auto!important;display:block!important}
+.scene,.intro{height:auto!important;max-height:none!important;min-height:0!important}
+.photo img,.character-portrait,.cinema-tooth,.care-card img{width:100%;height:auto!important;max-height:none!important;aspect-ratio:auto!important;display:block}
+.welcome img{width:100%!important;height:auto!important;max-height:none!important;aspect-ratio:auto!important;display:block!important}
+.art{width:100%!important;height:auto!important;max-height:none!important;aspect-ratio:auto!important;display:block!important}
+@media(max-width:760px){.scene{grid-template-columns:minmax(0,1fr)!important}.scene img,.scene #picture{max-height:none!important}.welcome{height:auto!important;min-height:0!important}.photo,.artrow{height:auto!important;min-height:0!important}}
+</style></head><body><header><a href="index.html">🦷 Liga do Sorriso</a><nav><a href="index.html">Início</a><a href="infantil.html">Área Infantil</a><a href="tabuleiro.html">Jogo</a><a href="carie-educativa.html">Versão educativa</a></nav></header><main class="wrap"><section class="intro"><img src="assets/historia-capa.jpg" alt="Ilustração 3D da história da cárie com dentinhos expressivos"><div><h1>💜 A História da Cárie</h1><p>Do primeiro sinal à possibilidade de tratamento de canal. Avance pelas cenas e descubra o que acontece dentro do dente!</p></div></section><section class="story" aria-label="História interativa da cárie"><div class="eyebrow" id="counter">CENA 1 DE 6</div><div class="progress" id="progress" aria-hidden="true"></div><div class="scene"><img id="picture" src="assets/carie-cena-1.jpg" alt="Dente 3D na primeira cena da história"><div><h2 id="heading"></h2><p class="bubble" id="quote"></p><p id="description"></p><p class="fact" id="fact"></p></div></div><div class="controls"><button class="secondary" id="prev" onclick="change(-1)">← Anterior</button><button class="secondary" id="speak" onclick="speakScene()">🔊 Ouvir a cena</button><button id="next" onclick="change(1)">Próxima cena →</button></div><p id="audio-status" class="note" role="status" aria-live="polite">Para ouvir, toque em “Ouvir a cena” e confira o volume do aparelho. Quando os áudios gravados estiverem instalados, serão reproduzidos automaticamente. Até lá, o aparelho fará a leitura provisória.</p><p class="note">História educativa: a progressão da cárie não é inevitável. O diagnóstico e o tratamento dependem de avaliação odontológica.</p></section></main><script>const scenes=[["A placa bacteriana", "Oi! Eu sou o Dentinho!", "As bactérias do biofilme aproveitam açúcares da alimentação e produzem ácidos. Quando isso acontece frequentemente, o esmalte pode perder minerais.", "A cárie é um processo, não uma bactéria que “come” o dente."], ["O primeiro sinal", "Ei, o que está acontecendo com meu esmalte?", "A cárie pode começar como uma mancha branca de desmineralização, antes de surgir uma cavidade. Nessa fase, medidas preventivas e avaliação profissional podem ajudar a controlar a lesão.", "Nem toda cárie começa com um buraco visível."], ["A cárie avança", "Ai! Agora estou mais sensível!", "Se a lesão progride para a dentina, pode haver sensibilidade ou dor. Mas algumas lesões continuam sem sintomas. O dentista avalia a profundidade e indica o cuidado necessário.", "Nem toda cárie causa dor."], ["A polpa em perigo", "Minha parte viva está sofrendo!", "Quando a cárie é muito profunda, a polpa — tecido com nervos e vasos sanguíneos — pode inflamar. Dependendo do diagnóstico, tratamentos diferentes podem ser necessários.", "Cárie profunda não significa automaticamente tratamento de canal."], ["Quando a polpa perde a vitalidade", "Não estou sentindo dor... será que melhorei?", "Em alguns casos, a inflamação ou infecção leva à necrose pulpar: o tecido dentro do dente perde a vitalidade. A dor pode até diminuir, mas isso não significa cura.", "Um dente com necrose pode não doer e ainda precisar de tratamento."], ["O tratamento de canal", "O dentista pode me salvar!", "Quando indicado, o tratamento de canal remove o tecido pulpar comprometido, limpa e desinfeta os canais e depois os preenche. O dente também precisa de uma restauração adequada.", "O dente tratado pode continuar na boca e mastigar, mas precisa de acompanhamento e cuidados."]];let index=0;function render(){const s=scenes[index];document.getElementById('counter').textContent='CENA '+(index+1)+' DE 6';document.getElementById('heading').textContent=s[0];document.getElementById('quote').textContent='🦷 “'+s[1]+'”';document.getElementById('description').textContent=s[2];document.getElementById('fact').textContent='Você sabia? '+s[3];document.getElementById('picture').src='assets/carie-cena-'+(index+1)+'.jpg';document.getElementById('picture').alt='Ilustração 3D: '+s[0];document.getElementById('progress').innerHTML=scenes.map((_,i)=>'<span class="'+(i<=index?'on':'')+'"></span>').join('');document.getElementById('prev').disabled=index===0;document.getElementById('next').textContent=index===5?'Recomeçar ↻':'Próxima cena →'}function change(n){stopScene();index=index===5&&n===1?0:Math.max(0,Math.min(5,index+n));render()}let currentSpeech=null;
+let currentAudio=null;
+let speechToken=0;
+const voiceStatus=()=>document.getElementById('audio-status');
+const voiceButton=()=>document.getElementById('speak');
+const audioFiles=Array.from({length:6},(_,i)=>'assets/audio/carie-cena-'+(i+1)+'.mp3');
+function stopScene(){
+ speechToken++;
+ if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;currentAudio=null;}
+ if('speechSynthesis' in window)window.speechSynthesis.cancel();
+ currentSpeech=null;voiceButton().textContent='🔊 Ouvir a cena';
+}
+function speechPart(text, role, token, onDone){
+ if(token!==speechToken)return;
+ if(!('speechSynthesis' in window)){voiceStatus().textContent='Este navegador não oferece leitura automática. Adicione os MP3 na pasta assets/audio.';stopScene();return;}
+ const synth=window.speechSynthesis;
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang='pt-BR';utterance.rate=role==='character'?.94:.97;utterance.pitch=role==='character'?1.16:1.03;
+ const voices=synth.getVoices().filter(v=>/^pt([_-]|$)/i.test(v.lang));
+ const prefer=voices.find(v=>/premium|enhanced|natural|luciana|fernanda|joana/i.test(v.name))||voices.find(v=>/^pt[-_]BR$/i.test(v.lang))||voices[0];
+ if(prefer)utterance.voice=prefer;
+ currentSpeech=utterance;
+ utterance.onend=()=>{if(token===speechToken)onDone();};
+ utterance.onerror=()=>{if(token===speechToken){stopScene();voiceStatus().textContent='A leitura do navegador foi interrompida. Para evitar isso, use os MP3 gravados.';}};
+ synth.speak(utterance);
+}
+function fallbackSpeech(scene,token){
+ voiceStatus().textContent='Leitura provisória do aparelho. Para ouvir vozes infantis naturais, adicione os áudios MP3.';
+ speechPart(scene[1],'character',token,()=>speechPart(scene[2],'narrator',token,()=>{
+  if(token===speechToken){stopScene();voiceStatus().textContent='Cena concluída.';}
+ }));
+}
+function speakScene(){
  const scene=scenes[index];
- // Texto curto e pontuação limpa evitam pausas excessivas na leitura do Safari.
- const text=[scene[0],scene[1],scene[2]].join('. ').replace(/\s+/g,' ').replace(/([.!?])\s*\1+/g,'$1');
- const voices=engine.getVoices();
- const pt=voices.filter(v=>/^pt[-_]BR$/i.test(v.lang));
- const local=pt.filter(v=>v.localService);
- const preferred=(local.find(v=>/luciana|fernanda|joana|francisca|maria/i.test(v.name)) || local[0] || pt[0]);
- const u=new SpeechSynthesisUtterance(text);
- u.lang='pt-BR'; if(preferred)u.voice=preferred;
- u.rate=1.03;u.pitch=1.08;u.volume=1;
- const btn=document.getElementById('speak');
- u.onstart=()=>{btn.textContent='⏹ Parar narração'};
- u.onend=u.onerror=()=>{btn.textContent='🔊 Ouvir a cena'};
- engine.cancel();engine.speak(u);
-}render();</script></body></html>
+ if(currentSpeech||currentAudio){stopScene();voiceStatus().textContent='Narração parada.';return;}
+ stopScene();const token=speechToken;
+ voiceButton().textContent='⏹ Parar narração';
+ voiceStatus().textContent='Carregando narração da cena '+(index+1)+'…';
+ const audio=new Audio(audioFiles[index]);currentAudio=audio;
+ audio.preload='auto';
+ audio.onended=()=>{if(token===speechToken){stopScene();voiceStatus().textContent='Cena concluída.';}};
+ audio.onerror=()=>{if(token===speechToken){currentAudio=null;fallbackSpeech(scene,token);}};
+ audio.play().catch(()=>{if(token===speechToken){currentAudio=null;fallbackSpeech(scene,token);}});
+}
+render();</script></body></html>
