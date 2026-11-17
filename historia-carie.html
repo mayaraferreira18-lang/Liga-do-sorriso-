@@ -44,7 +44,7 @@ let currentAudio=null;
 let speechToken=0;
 const voiceStatus=()=>document.getElementById('audio-status');
 const voiceButton=()=>document.getElementById('speak');
-const audioFiles=Array.from({length:6},(_,i)=>'assets/audio/carie-cena-'+(i+1)+'.mp3');
+const audioFiles=Array(6).fill('assets/audio/historia_dentinho_completo.mp3');
 function stopScene(){
  speechToken++;
  if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;currentAudio=null;}
